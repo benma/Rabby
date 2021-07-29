@@ -16,6 +16,7 @@ import { openIndexPage } from 'background/webapi/tab';
 import { CacheState } from 'background/service/pageStateCache';
 import i18n from 'background/service/i18n';
 import { KEYRING_CLASS, DisplayedKeryring } from 'background/service/keyring';
+import { serializeFnArgs } from 'background/utils';
 import BaseController from './base';
 import { CHAINS_ENUM, CHAINS } from 'consts';
 import { Account } from '../service/preference';
@@ -31,9 +32,9 @@ export class WalletController extends BaseController {
   verifyPassword = (password: string) =>
     keyringService.verifyPassword(password);
 
-  getApproval = notificationService.getApproval;
-  resolveApproval = notificationService.resolveApproval;
-  rejectApproval = notificationService.rejectApproval;
+  getApproval = () => notificationService.getApproval();
+  resolveApproval = (...args) => notificationService.resolveApproval(...args);
+  rejectApproval = (...args) => notificationService.rejectApproval(...args);
 
   unlock = async (password: string) => {
     await keyringService.submitPassword(password);
@@ -407,4 +408,13 @@ export class WalletController extends BaseController {
   }
 }
 
-export default new WalletController();
+const controller = new WalletController();
+
+export default new Proxy(controller, {
+  get(target, prop, receiver) {
+    if (prop === 'openapi') {
+      return serializeFnArgs(openapiService);
+    }
+    return serializeFnArgs(target)[prop];
+  },
+});

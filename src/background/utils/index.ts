@@ -53,3 +53,31 @@ export function normalizeAddress(input: number | string): string {
 
   return ethUtil.addHexPrefix(input);
 }
+
+export function serializeFnArgs(obj) {
+  return new Proxy(obj, {
+    get(target, prop) {
+      const originMethod = target[prop];
+
+      if (
+        typeof originMethod === 'function' &&
+        // [symbol] and [_...] function are taken as private method, just return origin method
+        typeof prop === 'string' &&
+        !prop.startsWith('_')
+      ) {
+        return (...args) => {
+          let data;
+          try {
+            data = JSON.parse(JSON.stringify(args));
+          } catch (err) {
+            console.log('[rabby] serilize function arguments failed', err);
+          }
+
+          // eslint-disable-next-line prefer-spread
+          return originMethod.apply(target, data);
+        };
+      }
+      return originMethod;
+    },
+  });
+}
