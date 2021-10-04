@@ -13,7 +13,7 @@ import { useWallet, useWalletRequest } from 'ui/utils';
 import { AddressViewer } from 'ui/component';
 import { splitNumberByStep } from 'ui/utils/number';
 import { HARDWARE_KEYRING_TYPES, CHAINS } from 'consts';
-import { IconLedger, IconOnekey, IconTrezor } from 'ui/assets';
+import { IconBitBox02, IconLedger, IconOnekey, IconTrezor } from 'ui/assets';
 import IconEmptyChain from 'ui/assets/chain-logos/empty.svg';
 
 interface DisplayChainWithWhiteLogo extends ChainWithBalance {
@@ -33,6 +33,7 @@ export interface AddressItemProps {
 }
 
 const HARDWARES = {
+  [HARDWARE_KEYRING_TYPES.BitBox02.type]: IconBitBox02,
   [HARDWARE_KEYRING_TYPES.Ledger.type]: IconLedger,
   [HARDWARE_KEYRING_TYPES.Trezor.type]: IconTrezor,
   [HARDWARE_KEYRING_TYPES.Onekey.type]: IconOnekey,

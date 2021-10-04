@@ -192,6 +192,7 @@ export const KEYRING_CLASS = {
   PRIVATE_KEY: 'Simple Key Pair',
   MNEMONIC: 'HD Key Tree',
   HARDWARE: {
+    BITBOX02: 'BitBox02 Hardware',
     TREZOR: 'Trezor Hardware',
     LEDGER: 'Ledger Hardware',
     ONEKEY: 'Onekey Hardware',
@@ -200,6 +201,10 @@ export const KEYRING_CLASS = {
 };
 
 export const HARDWARE_KEYRING_TYPES = {
+  BitBox02: {
+    type: 'BitBox02 Hardware',
+    brandName: 'BitBox02',
+  },
   Ledger: {
     type: 'Ledger Hardware',
     brandName: 'Ledger',
