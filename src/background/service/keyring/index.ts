@@ -7,6 +7,7 @@ import * as ethUtil from 'ethereumjs-util';
 import * as bip39 from 'bip39';
 import { ObservableStore } from '@metamask/obs-store';
 import { normalizeAddress } from 'background/utils';
+import BitBox02Keyring from './eth-bitbox02-keyring';
 import LedgerBridgeKeyring from './eth-ledger-bridge-keyring';
 import SimpleKeyring from 'eth-simple-keyring';
 import HdKeyring from './eth-hd-keyring';
@@ -21,6 +22,7 @@ import DisplayKeyring from './display';
 export const KEYRING_SDK_TYPES = {
   SimpleKeyring,
   HdKeyring,
+  BitBox02Keyring,
   TrezorKeyring,
   LedgerBridgeKeyring,
   OnekeyKeyring,
@@ -31,6 +33,7 @@ export const KEYRING_CLASS = {
   PRIVATE_KEY: SimpleKeyring.type,
   MNEMONIC: HdKeyring.type,
   HARDWARE: {
+    BITBOX02: BitBox02Keyring.type,
     TREZOR: TrezorKeyring.type,
     LEDGER: LedgerBridgeKeyring.type,
     ONEKEY: OnekeyKeyring.type,
